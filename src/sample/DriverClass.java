@@ -22,6 +22,8 @@ public class DriverClass
         simulator.autogenerateCategory();
         simulator.saveTheInventory(simulator.foodAuto,"out.bin");
         simulator.saveTheCategory(simulator.categoryAuto,"category.bin");
+        simulator.readExcel("test.xls");
+        simulator.writeExcel("test.xls");
     }
     public static void main(String [] args)
     {
@@ -31,6 +33,7 @@ public class DriverClass
         //run simulator binary file
 
         new DriverClass("out.bin","category.bin");
+
 
         //run simulator excel file
     }

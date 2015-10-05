@@ -1,9 +1,12 @@
 package sample;
 
-import java.io.FileOutputStream;
+import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.hssf.util.HSSFColor;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Date;
 
 /**
  * Created by shawn on 9/29/2015.
@@ -131,6 +134,73 @@ public class Simulator
     {
 
     }
+    public void writeExcel(String fileName)
+    {
+        try
+        {
+            FileOutputStream fileOut = new FileOutputStream(fileName);
+            HSSFWorkbook workbook = new HSSFWorkbook();
+            HSSFSheet worksheet = workbook.createSheet("POI Worksheet");
 
+            // index from 0,0... cell A1 is cell(0,0)
+            HSSFRow row1 = worksheet.createRow((short) 0);
+
+            HSSFCell cellA1 = row1.createCell((short) 0);
+            cellA1.setCellValue(myLinkedList.toString());
+            HSSFCellStyle cellStyle = workbook.createCellStyle();
+            cellStyle.setFillForegroundColor(HSSFColor.GOLD.index);
+            cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+            cellA1.setCellStyle(cellStyle);
+
+            /*HSSFCell cellB1 = row1.createCell((short) 1);
+            cellB1.setCellValue("Goodbye");
+            cellStyle = workbook.createCellStyle();
+            cellStyle.setFillForegroundColor(HSSFColor.LIGHT_CORNFLOWER_BLUE.index);
+            cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+            cellB1.setCellStyle(cellStyle);
+
+            HSSFCell cellC1 = row1.createCell((short) 2);
+            cellC1.setCellValue(true);
+
+            HSSFCell cellD1 = row1.createCell((short) 3);
+            cellD1.setCellValue(new Date());
+            cellStyle = workbook.createCellStyle();
+            cellStyle.setDataFormat(HSSFDataFormat
+                    .getBuiltinFormat("m/d/yy h:mm"));
+            cellD1.setCellStyle(cellStyle);*/
+
+            workbook.write(fileOut);
+            fileOut.flush();
+            fileOut.close();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+    public void readExcel(String fileName)
+    {
+        try {
+            //test.xls
+            FileInputStream fileInputStream = new FileInputStream(fileName);
+            HSSFWorkbook workbook = new HSSFWorkbook(fileInputStream);
+            HSSFSheet worksheet = workbook.getSheet("POI Worksheet");
+            HSSFRow row1 = worksheet.getRow(0);
+            HSSFCell cellA1 = row1.getCell( 0);
+            String a1Val = cellA1.getStringCellValue();
+            /*HSSFCell cellB1 = row1.getCell( 1);
+            String b1Val = cellB1.getStringCellValue();
+            HSSFCell cellC1 = row1.getCell( 2);
+            boolean c1Val = cellC1.getBooleanCellValue();
+            HSSFCell cellD1 = row1.getCell(3);
+            Date d1Val = cellD1.getDateCellValue();*/
+
+            System.out.println("LinkedList: " + a1Val);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }
