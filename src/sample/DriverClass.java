@@ -19,6 +19,9 @@ public class DriverClass
     {
         Simulator simulator = new Simulator();
         simulator.binaryFileSimulator(food,category);
+        simulator.autogenerateCategory();
+        simulator.saveTheInventory(simulator.foodAuto,"out.bin");
+        simulator.saveTheCategory(simulator.categoryAuto,"category.bin");
     }
     public static void main(String [] args)
     {
@@ -26,21 +29,8 @@ public class DriverClass
         //gui
        // new DriverClass(args);
         //run simulator binary file
-        FoodItemLinkedList<FoodItemClass> a = new FoodItemLinkedList<>();
-        FoodItemClass item =  new FoodItemClass("food1", 6.00, 1, "decription1", 10, "specialOrder");
-        a.add(item);
-        a.add(new FoodItemClass("food2", 4.30, 1, "decription1", 10, "specialOrder"));
-        FoodCategoryLinkedList<FoodItemLinkedList<FoodItemClass>> b = new FoodCategoryLinkedList();
-        b.add(a,"Main Foods");
-        Simulator simulator = new Simulator();
-        simulator.saveTheInventory(a,"out.bin");
-        simulator.saveTheCategory(b,"category.bin");
+
         new DriverClass("out.bin","category.bin");
-        //new DriverClass("out.bin");
-       // FoodItemLinkedList<FoodItemClass> b = simulator.readTheInventory("out.bin");
-       // b.add(item);
-        //b.add(item);
-        //simulator.saveTheInventory(b);
 
         //run simulator excel file
     }

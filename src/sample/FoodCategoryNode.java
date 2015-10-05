@@ -44,4 +44,13 @@ public class FoodCategoryNode<T> implements Serializable
     public void setNext(FoodCategoryNode next) {
         this.next= next;
     }
+
+    @Override
+    public String toString() {
+        return "FoodCategoryNode{" +
+                "category name='" + name + "\n" +
+                ", data=" + data +
+                 '\'' +
+                '}';
+    }
 }

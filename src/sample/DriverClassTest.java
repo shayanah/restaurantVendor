@@ -20,16 +20,16 @@ public class DriverClassTest
         c.add(new FoodItemClass("food2", 4.30, 1, "decription1", 10, "specialOrder"));
 
         System.out.println(a);
-        if( a.search(new FoodItemClass("food1", 5.00, 1, "decription1", 10, "specialOrder")))
+        if( a.search(new FoodItemClass("food1", 5.00, 1, "decription1", 10, "specialOrder")) != null)
             System.out.println("a is right");
 
         FoodCategoryLinkedList<FoodItemLinkedList<FoodItemClass>> b = new FoodCategoryLinkedList();
         b.add(a,"main");
         System.out.println(b);
 
-        if( b.search(a))
+        if( b.search(a) != null)
             System.out.println("b is right");
-        if( b.search(c))
+        if( b.search(c) != null)
             System.out.println("b is right lvl2");
         //run
     }

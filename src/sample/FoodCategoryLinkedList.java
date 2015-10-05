@@ -20,6 +20,11 @@ public class FoodCategoryLinkedList<T> implements Serializable
         tail = null;
         size = 0 ;
     }
+
+    /**
+     * chech if empty
+     * @return
+     */
     private boolean isEmpty()
     {
         if(head == null)
@@ -27,6 +32,11 @@ public class FoodCategoryLinkedList<T> implements Serializable
         else
             return false;
     }
+
+    /**
+     * add element
+     * @param element
+     */
     public void add(T element)
     {
         FoodCategoryNode node = new FoodCategoryNode(element);
@@ -37,6 +47,12 @@ public class FoodCategoryLinkedList<T> implements Serializable
         tail = node;
         size++;
     }
+
+    /**
+     * add element in spccific category
+     * @param element
+     * @param name
+     */
     public void add(T element,String name)
     {
         FoodCategoryNode node = new FoodCategoryNode(element,name);
@@ -48,7 +64,13 @@ public class FoodCategoryLinkedList<T> implements Serializable
         size++;
 
     }
-    public boolean search(T element)
+
+    /**
+     * search into list
+     * @param element
+     * @return
+     */
+    public FoodCategoryNode<T> search(T element)
     {
         try
         {
@@ -56,7 +78,33 @@ public class FoodCategoryLinkedList<T> implements Serializable
             while(current != null)
             {
                 if (current.getData().equals(element))
+                    return current;
+                current = current.getNext();
+            }
+        }
+        catch (Exception e){}
+
+        return null;
+    }
+
+    /**
+     * update list at specific element
+     * @param element
+     * @param rElement
+     * @return
+     */
+    public boolean update(T element, T rElement)
+    {
+        try
+        {
+            FoodCategoryNode current = head;
+            while(current != null)
+            {
+                if (current.getData().equals(element))
+                {
+                    current.setData(rElement);
                     return true;
+                }
                 current = current.getNext();
             }
         }
@@ -65,6 +113,40 @@ public class FoodCategoryLinkedList<T> implements Serializable
         return false;
     }
 
+    /**
+     * updage specific index
+     * @param element
+     * @param rElement
+     * @param index
+     * @return
+     */
+    public boolean update(FoodCategoryNode<T> element, FoodCategoryNode<T> rElement, int index)
+    {
+        try
+        {
+            int i = 0;
+            FoodCategoryNode current = head;
+            while(current != null)
+            {
+                if (current.getData().equals(element) && i == index)
+                {
+                    current.setData(rElement.getData());
+                    current.setName(rElement.getName());
+                    return true;
+                }
+                current = current.getNext();
+                i++;
+            }
+        }
+        catch (Exception e){}
+
+        return false;
+    }
+
+    /**
+     * delete element
+     * @param element
+     */
     public void delete(T element)
     {
         try
@@ -72,7 +154,10 @@ public class FoodCategoryLinkedList<T> implements Serializable
             FoodCategoryNode current = head;
             FoodCategoryNode before = head;
             if(head.getData().equals(element))
+            {
                 head = head.getNext();
+                size--;
+            }
 
             while(current != null)
             {
@@ -80,6 +165,7 @@ public class FoodCategoryLinkedList<T> implements Serializable
                 {
                     before.setNext(current.getNext());
                     current = current.getNext();
+                    size--;
                 }
                 else
                 {
@@ -94,6 +180,54 @@ public class FoodCategoryLinkedList<T> implements Serializable
 
     }
 
+    /**
+     * delete item form pariticular element
+     * @param element
+     * @param index
+     * @return
+     */
+    public boolean delete(T element,int index)
+    {
+        try
+        {
+            FoodCategoryNode current = head.getNext();
+            FoodCategoryNode before = head;
+            int i = 0;
+            if(i == index && head.getData().equals(element) )
+            {
+                head = head.getNext();
+                size--;
+                return true;
+            }
+            i++;
+            while(current != null)
+            {
+                if(i == index && current.getData().equals(element) )
+                {
+                    before.setNext(current.getNext());
+                    current = current.getNext();
+                    size--;
+                    return true;
+
+                }
+                else
+                {
+                    before = current;
+                    current = current.getNext();
+                }
+                i++;
+            }
+
+        }
+
+        catch(Exception e){}
+        return false;
+    }
+
+    /**
+     *
+     * @return fields
+     */
     public String toString()
     {
         String list = "";
@@ -108,21 +242,27 @@ public class FoodCategoryLinkedList<T> implements Serializable
         return list;
     }
 
-    public ObservableList<T> copy()
+    /**
+     * copy elements into specific
+     * @return
+     */
+    public ObservableList<FoodCategoryNode<T>> copy()
     {
-        ObservableList<T> temp = FXCollections.observableArrayList();
+        ObservableList<FoodCategoryNode<T>> temp = FXCollections.observableArrayList();
         try
         {
             FoodCategoryNode current = head;
             while(current != null)
             {
 
-                temp.add((T)current.getData());
+                temp.add( current);
                 current = current.getNext();
             }
         }
         catch(Exception e){}
         return temp;
     }
+
+
 
 }

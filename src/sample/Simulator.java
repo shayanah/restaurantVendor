@@ -11,7 +11,9 @@ import java.io.ObjectOutputStream;
 public class Simulator
 {
     private FoodItemLinkedList myLinkedList = null;
-    private FoodCategoryLinkedList myCategoryLinkedList;
+    private FoodCategoryLinkedList myCategoryLinkedList = null;
+    public FoodItemLinkedList<FoodItemClass> foodAuto = null;
+    public FoodCategoryLinkedList<FoodItemLinkedList<FoodItemClass>> categoryAuto = null;
     public static void saveTheInventory(FoodItemLinkedList myLinkList,String fileName)
     {
 
@@ -88,8 +90,42 @@ public class Simulator
         myLinkedList = readTheInventory(foodFile);
         myCategoryLinkedList = readTheCategory(categoryFile);
         System.out.println(myLinkedList);
+        myLinkedList.delete(new FoodItemClass("food2", 4.30, 1, "decription1", 10, "specialOrder"));
         System.out.println("Categories:");
         System.out.println(myCategoryLinkedList);
+        autogenerateCategory();
+
+        if(myCategoryLinkedList.search(foodAuto) != null)
+            System.out.println("found");
+        else
+            System.out.println("Not found");
+        myCategoryLinkedList.delete(foodAuto);
+        System.out.println(myCategoryLinkedList);
+
+
+    }
+    public FoodItemLinkedList<FoodItemClass> autogenerateFoods()
+    {
+        foodAuto = new FoodItemLinkedList<>();
+        FoodItemClass item =  new FoodItemClass("food1", 6.00, 1, "decription1", 10, "specialOrder");
+        foodAuto.add(item);
+        foodAuto.add(new FoodItemClass("food2", 4.30, 1, "decription1", 10, "specialOrder"));
+        foodAuto.add(new FoodItemClass("food3", 5.30, 1, "decription1", 10, "specialOrder"));
+
+        return foodAuto;
+    }
+    public FoodCategoryLinkedList<FoodItemLinkedList<FoodItemClass>> autogenerateCategory()
+    {
+        autogenerateFoods();
+        categoryAuto = new FoodCategoryLinkedList<>();
+        categoryAuto.add(foodAuto,"Main Foods");
+        FoodItemLinkedList<FoodItemClass> a = new FoodItemLinkedList<>();
+        for(int i =0 ; i < 10 ; i++)
+        {
+            a.add(new FoodItemClass("Some food", i * 2.3, i + 3, "Some descriptions", i ^ 2 + 5, "yes"));
+        }
+        categoryAuto.add(a,"Desert");
+        return  categoryAuto;
     }
     public void excelSimulator(String fileName)
     {
